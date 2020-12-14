@@ -1,0 +1,9 @@
+name: 'Slack Notify Approved'
+description: 'This action will send notification to Slack When pull request is approved.'
+author: 'Ayaka Tajiri'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  icon: 'send'
+  color: 'purple'
