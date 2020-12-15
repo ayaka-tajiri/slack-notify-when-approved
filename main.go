@@ -65,7 +65,10 @@ type Field struct {
 func main() {
 	// check approvals
 	strTargetApprovals := os.Getenv(EnvApprovals)
-	targetApproval, _ := strconv.Atoi(strTargetApprovals)
+	targetApproval, err := strconv.Atoi(strTargetApprovals)
+	if err != nil {
+		log.Fatal(err)
+	}
 	if targetApproval != approvalCount() {
 		os.Exit(0)
 	}
