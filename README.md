@@ -33,4 +33,4 @@ jobs:
 - SLACK_CHANNEL
 
 ## LISENCE
-[MIT](./LISENCE)
+[MIT](./LICENSE)
