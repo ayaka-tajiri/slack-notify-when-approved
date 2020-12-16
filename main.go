@@ -16,10 +16,8 @@ const (
 	EnvGithubRepository = "GITHUB_REPOSITORY"
 	EnvGithubToken      = "GITHUB_TOKEN"
 	EnvGithubSha        = "GITHUB_SHA"
-	EnvGithubRef        = "GITHUB_REF"
-	EnvGithubEventName  = "GITHUB_EVENT_NAME"
+
 	EnvGithubWorkflow   = "GITHUB_WORKFLOW"
-	EnvGithubActor      = "GITHUB_ACTOR"
 	EnvSlackWebHook     = "SLACK_WEB_HOOK"
 	EnvSlackTitle       = "SLACK_TITLE"
 	EnvSlackMessage     = "SLACK_MESSAGE"
@@ -115,7 +113,7 @@ func (slackMessage *SlackMessage) slackNotify() {
 	fields := []Field{
 		{
 			Title: "PullRequest URL",
-			Value: "<https://github.com/" + os.Getenv(EnvGithubRepository) + "/pull/" + os.Getenv(EnvPrNumber)>",
+			Value: "<https://github.com/" + os.Getenv(EnvGithubRepository) + "/pull/" + os.Getenv(EnvPrNumber) + ">",
 			Short: true,
 		},
 		{
