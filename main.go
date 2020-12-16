@@ -88,7 +88,6 @@ func approvalCount() int {
 	prNumber := os.Getenv(EnvPrNumber)
 	reviewerUri := "https://api.github.com"
 	reviewerUrl := reviewerUri + "/repos/" + githubRepository + "/pulls/" + prNumber + "/reviews?per_page=100"
-	log.Print(reviewerUrl)
 
 	client := &http.Client{}
 	req, _ := http.NewRequest("GET", reviewerUrl, nil)
@@ -117,8 +116,6 @@ func approvalCount() int {
 }
 
 func (slackMessage *SlackMessage) slackNotify() {
-	longSha := os.Getenv(EnvGithubSha)
-	commitSha := longSha[0:6]
 	fields := []Field{
 		{
 			Title: "PullRequest URL",
@@ -129,12 +126,6 @@ func (slackMessage *SlackMessage) slackNotify() {
 			Title: "Actions URL",
 			Value: "<https://github.com/" + os.Getenv(EnvGithubRepository) + "/commit/" + os.Getenv(EnvGithubSha) +
 				"/checks|" + os.Getenv(EnvGithubWorkflow) + ">",
-			Short: true,
-		},
-		{
-			Title: "Commit",
-			Value: "<https://github.com/" + os.Getenv(EnvGithubRepository) + "/commit/" + os.Getenv(EnvGithubSha) +
-				"|" + commitSha + ">",
 			Short: true,
 		},
 		{
@@ -156,14 +147,12 @@ func (slackMessage *SlackMessage) slackNotify() {
 		},
 	}
 
-	log.Print(slackMessage)
 	slackMessageByte, _ := json.Marshal(slackMessage)
 	slackWebHook := os.Getenv(EnvSlackWebHook)
-	res, err := http.Post(slackWebHook, "application/json", bytes.NewBuffer(slackMessageByte))
+	_, err := http.Post(slackWebHook, "application/json", bytes.NewBuffer(slackMessageByte))
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Print(res)
 }
 
 func getEnv(key, fallback string) string {
