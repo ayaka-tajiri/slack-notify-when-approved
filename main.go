@@ -115,7 +115,7 @@ func (slackMessage *SlackMessage) slackNotify() {
 	fields := []Field{
 		{
 			Title: "PullRequest URL",
-			Value: "<https://github.com/" + os.Getenv(EnvGithubRepository) + "/pull/" + os.Getenv(EnvPrNumber)>",
+			Value: "<https://github.com/" + os.Getenv(EnvGithubRepository) + "/pull/" + os.Getenv(EnvPrNumber) + ">",
 			Short: true,
 		},
 		{
