@@ -16,7 +16,6 @@ const (
 	EnvGithubRepository = "GITHUB_REPOSITORY"
 	EnvGithubToken      = "GITHUB_TOKEN"
 	EnvGithubSha        = "GITHUB_SHA"
-
 	EnvGithubWorkflow   = "GITHUB_WORKFLOW"
 	EnvSlackWebHook     = "SLACK_WEB_HOOK"
 	EnvSlackTitle       = "SLACK_TITLE"
@@ -68,6 +67,7 @@ func main() {
 		log.Fatal(err)
 	}
 	if targetApproval != approvalCount() {
+		log.Print("not send message")
 		os.Exit(0)
 	}
 
@@ -147,6 +147,7 @@ func (slackMessage *SlackMessage) slackNotify() {
 		},
 	}
 
+	log.Print(slackMessage)
 	slackMessageByte, _ := json.Marshal(slackMessage)
 	slackWebHook := os.Getenv(EnvSlackWebHook)
 	res, err := http.Post(slackWebHook, "application/json", bytes.NewBuffer(slackMessageByte))
