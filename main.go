@@ -16,7 +16,6 @@ const (
 	EnvGithubRepository = "GITHUB_REPOSITORY"
 	EnvGithubToken      = "GITHUB_TOKEN"
 	EnvGithubSha        = "GITHUB_SHA"
-
 	EnvGithubWorkflow   = "GITHUB_WORKFLOW"
 	EnvSlackWebHook     = "SLACK_WEB_HOOK"
 	EnvSlackTitle       = "SLACK_TITLE"
@@ -63,11 +62,17 @@ type Field struct {
 func main() {
 	// check approvals
 	strTargetApprovals := os.Getenv(EnvApprovals)
-	targetApproval, err := strconv.Atoi(strTargetApprovals)
+	targetApprovals, err := strconv.Atoi(strTargetApprovals)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if targetApproval != approvalCount() {
+	
+	currentApprovals := approvalCount()
+	if targetApprovals != currentApprovals {
+		log.Printf(
+			"The number of Approve has not reached the set number.　You need %d Approve but you have only %d Approve .",
+			targetApprovals,
+			currentApprovals)
 		os.Exit(0)
 	}
 
@@ -108,8 +113,6 @@ func approvalCount() int {
 }
 
 func (slackMessage *SlackMessage) slackNotify() {
-	longSha := os.Getenv(EnvGithubSha)
-	commitSha := longSha[0:6]
 	fields := []Field{
 		{
 			Title: "PullRequest URL",
@@ -120,12 +123,6 @@ func (slackMessage *SlackMessage) slackNotify() {
 			Title: "Actions URL",
 			Value: "<https://github.com/" + os.Getenv(EnvGithubRepository) + "/commit/" + os.Getenv(EnvGithubSha) +
 				"/checks|" + os.Getenv(EnvGithubWorkflow) + ">",
-			Short: true,
-		},
-		{
-			Title: "Commit",
-			Value: "<https://github.com/" + os.Getenv(EnvGithubRepository) + "/commit/" + os.Getenv(EnvGithubSha) +
-				"|" + commitSha + ">",
 			Short: true,
 		},
 		{
