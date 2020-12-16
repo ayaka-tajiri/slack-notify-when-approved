@@ -116,7 +116,7 @@ func (slackMessage *SlackMessage) slackNotify() {
 		{
 			Title: "PullRequest URL",
 			Value: "<https://github.com/" + os.Getenv(EnvGithubRepository) + "/pull/" + os.Getenv(EnvPrNumber)>",
-			Short: true/,
+			Short: true,
 		},
 		{
 			Title: "Actions URL",
