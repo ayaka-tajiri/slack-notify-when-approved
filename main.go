@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -105,10 +106,12 @@ func approvalCount() int {
 	totalApprovals := 0
 	for _, reviewer := range reviewers {
 		if reviewer.State == "APPROVED" {
+			fmt.Print(reviewer)
 			totalApprovals++
 		}
 	}
 
+	fmt.Print(totalApprovals)
 	return totalApprovals
 }
 
