@@ -114,14 +114,9 @@ func (slackMessage *SlackMessage) slackNotify() {
 	commitSha := longSha[0:6]
 	fields := []Field{
 		{
-			Title: "Ref",
-			Value: os.Getenv(EnvGithubRef),
-			Short: true,
-		},
-		{
-			Title: "Event",
-			Value: os.Getenv(EnvGithubEventName),
-			Short: true,
+			Title: "PullRequest URL",
+			Value: "<https://github.com/" + os.Getenv(EnvGithubRepository) + "/pull/" + os.Getenv(EnvPrNumber)>",
+			Short: true/,
 		},
 		{
 			Title: "Actions URL",
@@ -149,9 +144,6 @@ func (slackMessage *SlackMessage) slackNotify() {
 	slackMessage.Attachments = []Attachment{
 		{
 			Color:      getEnv(EnvSlackColor, "good"),
-			AuthorName: os.Getenv(EnvGithubActor),
-			AuthorLink: "http://github.com/" + os.Getenv(EnvGithubActor),
-			AuthorIcon: "http://github.com/" + os.Getenv(EnvGithubActor) + ".png?size=32",
 			Footer:     getEnv(EnvSlackFooter, "<https://github.com/ayaka-tajiri/slack-notify-when-approved|Powered By Ayaka's GitHub Actions Library>"),
 			Fields:     fields,
 		},
