@@ -88,6 +88,7 @@ func approvalCount() int {
 	prNumber := os.Getenv(EnvPrNumber)
 	reviewerUri := "https://api.github.com"
 	reviewerUrl := reviewerUri + "/repos/" + githubRepository + "/pulls/" + prNumber + "/reviews?per_page=100"
+	log.Print(reviewerUrl)
 
 	client := &http.Client{}
 	req, _ := http.NewRequest("GET", reviewerUrl, nil)
@@ -106,7 +107,7 @@ func approvalCount() int {
 	totalApprovals := 0
 	for _, reviewer := range reviewers {
 		if reviewer.State == "APPROVED" {
-			fmt.Print(reviewer)
+			fmt.Print(reviewer.State)
 			totalApprovals++
 		}
 	}
