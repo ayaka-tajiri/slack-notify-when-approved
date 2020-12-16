@@ -149,10 +149,11 @@ func (slackMessage *SlackMessage) slackNotify() {
 
 	slackMessageByte, _ := json.Marshal(slackMessage)
 	slackWebHook := os.Getenv(EnvSlackWebHook)
-	_, err := http.Post(slackWebHook, "application/json", bytes.NewBuffer(slackMessageByte))
+	res, err := http.Post(slackWebHook, "application/json", bytes.NewBuffer(slackMessageByte))
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Print(res)
 }
 
 func getEnv(key, fallback string) string {
