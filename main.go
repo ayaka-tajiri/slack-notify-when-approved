@@ -62,12 +62,14 @@ type Field struct {
 func main() {
 	// check approvals
 	strTargetApprovals := os.Getenv(EnvApprovals)
-	targetApproval, err := strconv.Atoi(strTargetApprovals)
+	targetApprovals, err := strconv.Atoi(strTargetApprovals)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if targetApproval != approvalCount() {
-		log.Print("not send message")
+	
+	currentApprovals := approvalCount()
+	if targetApprovals != currentApprovals {
+		log.Print("The number of Approve has not reached the set number.　You need " + targetApprovals + " Approve but you have only " + currentApprovals + " Approve .")
 		os.Exit(0)
 	}
 
