@@ -68,7 +68,7 @@ func main() {
 	}
 	
 	currentApprovals := approvalCount()
-	if targetApprovals != currentApprovals {
+	if targetApprovals > currentApprovals {
 		log.Printf(
 			"The number of Approve has not reached the set number.　You need %d Approve but you have only %d Approve .",
 			targetApprovals,
